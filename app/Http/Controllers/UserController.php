@@ -63,12 +63,23 @@ class UserController extends Controller
     {
         // TODO Update the the user which is equal the id of user input
 
-        User::where('id', $id)->update([
+        // User::where('id', $id)->update([
+        //     'name' => $request->name,
+        //     'email' => $request->email,
+        //     'email_verified_at' => $request->email_verified_at,
+        //     'password' => $request->password
+        // ]);
+
+        //-----------------------------------------
+        // the AI way
+        $user = User::find($id);
+        $user->fill([
             'name' => $request->name,
             'email' => $request->email,
             'email_verified_at' => $request->email_verified_at,
             'password' => $request->password
         ]);
+        $user->save();
         return 'Updated sucessfully!';
     }
 
