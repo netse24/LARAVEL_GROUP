@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\PeopleController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -40,4 +41,20 @@ Route::prefix('postGroup')->group(function () {
 // Family People Route 
 Route::prefix('people')->group(function () {
     Route::get('/person', [PeopleController::class, 'index']);
+});
+
+
+
+// Family Users Route
+
+Route::prefix('userGroup')->group(function () {
+    Route::get('/get', [UserController::class, 'index']);   // Get all users form users table 
+    Route::get('/getId/{id}', [UserController::class, 'show']); // Get one user by id
+    Route::post('/post', [UserController::class, 'store']); // Create a new user in one time 
+    Route::put('/update/{id}', [UserController::class, 'update']); // Update a user in one time 
+    Route::delete('/destroy/{id}', [UserController::class, 'destroy']); // Delete a user in one time
+
+    Route::fallback(function () {
+        return 'Check your request and try again 🙂!';  // Prevent wrong request form users; 
+    });
 });
