@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -141,5 +142,13 @@ class PostController extends Controller
     {
         //TODO  
 
+    }
+    // --------------------- RELATIONSHIP BETWEEN TABLE AND TABLE ------------------------ 
+
+    // if foreing stays where? so we need to execute there!! from their name such as posts table has foreign key from user. 
+    public function getUserFor(Request $request)
+    {
+        $posts = User::find($request->id)->post;
+        return response()->json(array('message' => 'Requested successfully', 'data' => $posts), 200);
     }
 }

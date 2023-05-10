@@ -92,18 +92,18 @@ class UserController extends Controller
 
         //-----------------------------------------
         // the AI way
-        
-            $user = User::find($id);
-            $user->fill([
-                'name' => $request->name,
-                'email' => $request->email,
-                'email_verified_at' => $request->email_verified_at,
-                'password' => $request->password
-            ]);
-            $user->save();
-            return response()->json(array('message' => 'Updated data successfully'), 200);
-        }
-    
+
+        $user = User::find($id);
+        $user->fill([
+            'name' => $request->name,
+            'email' => $request->email,
+            'email_verified_at' => $request->email_verified_at,
+            'password' => $request->password
+        ]);
+        $user->save();
+        return response()->json(array('message' => 'Updated data successfully'), 200);
+    }
+
 
     /**
      * Remove the specified resource from storage.
@@ -114,4 +114,7 @@ class UserController extends Controller
         User::where('id', $id)->delete();
         return response()->json(array('message' => 'Deleted data successfully!', 'id' => $id), 200);
     }
+
+
+   
 }

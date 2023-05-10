@@ -17,6 +17,10 @@ return new class extends Migration
             $table->string('title');
             $table->integer('price')->unsigned()->nullable();
             $table->text('description');
+
+            // set foreign key----
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

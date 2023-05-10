@@ -37,7 +37,6 @@ Route::prefix('postGroup')->group(function () {
     Route::get('/biggestPost', [PostController::class, 'getBiggestPost'])->name('getBiggestPost');
     Route::get('/notBetween', [PostController::class, 'getPriceNotBetween'])->name('getPriceNotBetween');
     Route::post('/validation', [PostController::class, 'validateData']);
-
 });
 // Validate function 
 
@@ -58,4 +57,10 @@ Route::prefix('userGroup')->group(function () {
     Route::fallback(function () {
         return 'Check your request and try again 🙂!';  // Prevent wrong request form users; 
     });
+});
+
+// Route with relationship tables 
+
+Route::prefix('relationship')->group(function () {
+    Route::get('/getPost/{id}', [PostController::class, 'getUserFor']);
 });
