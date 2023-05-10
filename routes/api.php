@@ -53,7 +53,6 @@ Route::prefix('userGroup')->group(function () {
     Route::post('/post', [UserController::class, 'store']); // Create a new user in one time 
     Route::put('/update/{id}', [UserController::class, 'update']); // Update a user in one time 
     Route::delete('/destroy/{id}', [UserController::class, 'destroy']); // Delete a user in one time
-
     Route::fallback(function () {
         return 'Check your request and try again 🙂!';  // Prevent wrong request form users; 
     });
