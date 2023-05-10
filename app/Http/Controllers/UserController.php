@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -13,7 +14,8 @@ class UserController extends Controller
     public function index()
     {
         // TODO get all users from users table 
-        return User::all();
+        $data =  User::all();
+        return response()->json(array('messsage' => 'successfully', 'data' => $data), 200);
     }
 
     /**
@@ -29,14 +31,31 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        // TODO create new user
-        User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'email_verified_at' => $request->email_verified_at,
-            'password' => $request->password
+        // TODO create new user with validation each columns 
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|max:20',
+            'email' => 'required|email|unique:users,email',
+            'email_verified_at' => 'nullable',
+            'password' => [
+                'required',
+                'min:5',             // must be at least 10 characters in length
+                'regex:/[a-z]/',      // must contain at least one lowercase letter
+                'regex:/[A-Z]/',      // must contain at least one uppercase letter
+                'regex:/[0-9]/',      // must contain at least one digit
+                'regex:/[@$!%*#?&]/', // must contain a special character
+            ],
         ]);
-        return 'Created sucessfully!';
+        if ($validator->fails()) {
+            return $validator->errors();
+        } else {
+            User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'email_verified_at' => $request->email_verified_at,
+                'password' => $request->password
+            ]);
+            return response()->json(array('message' => 'Post data successfully'), 200);
+        }
     }
 
     /**
@@ -45,7 +64,8 @@ class UserController extends Controller
     public function show(string $id)
     {
         //TODO get one use by id 
-        return User::find($id);
+        $show =  User::find($id);
+        return response()->json(array('message' => 'Shown data successfully', 'show' => $show), 200);
     }
 
     /**
@@ -72,16 +92,18 @@ class UserController extends Controller
 
         //-----------------------------------------
         // the AI way
-        $user = User::find($id);
-        $user->fill([
-            'name' => $request->name,
-            'email' => $request->email,
-            'email_verified_at' => $request->email_verified_at,
-            'password' => $request->password
-        ]);
-        $user->save();
-        return 'Updated sucessfully!';
-    }
+        
+            $user = User::find($id);
+            $user->fill([
+                'name' => $request->name,
+                'email' => $request->email,
+                'email_verified_at' => $request->email_verified_at,
+                'password' => $request->password
+            ]);
+            $user->save();
+            return response()->json(array('message' => 'Updated data successfully'), 200);
+        }
+    
 
     /**
      * Remove the specified resource from storage.
@@ -90,6 +112,6 @@ class UserController extends Controller
     {
         // TODO delete user by ID 
         User::where('id', $id)->delete();
-        return 'Deleted sucessfully!';
+        return response()->json(array('message' => 'Deleted data successfully!', 'id' => $id), 200);
     }
 }
