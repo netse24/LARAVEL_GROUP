@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
@@ -120,8 +121,12 @@ class UserController extends Controller
 
     public function getUserRole()
     {
-    //     $user = User::find(2);
-    //     $role = Role::find(2);
-    //    return [$user,$role];
+        $users = DB::table('users')
+            ->select('users.*', 'roles.*')
+            ->join('user_roles', 'users.id', '=', 'user_roles.user_id')
+            ->join('roles', 'user_roles.role_id', '=', 'roles.id')
+            ->get();
+        return response()->json(array('message' => 'Selected join successfully!', 'data' => $users), 200);
+
     }
 }
