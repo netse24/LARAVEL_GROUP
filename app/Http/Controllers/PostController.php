@@ -148,7 +148,7 @@ class PostController extends Controller
     // if foreing stays where? so we need to execute there!! from their name such as posts table has foreign key from user. 
     public function getUserFor(Request $request)
     {
-        $posts = User::find($request->id)->post;
-        return response()->json(array('message' => 'Requested successfully', 'data' => $posts), 200);
+        $posts = User::find($request->id)->post; //
+        return response()->json(array('message' => 'Requested successfully', 'data' => $posts), 200); //
     }
 }

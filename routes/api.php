@@ -38,7 +38,6 @@ Route::prefix('postGroup')->group(function () {
     Route::get('/notBetween', [PostController::class, 'getPriceNotBetween'])->name('getPriceNotBetween');
     Route::post('/validation', [PostController::class, 'validateData']);
 });
-// Validate function 
 
 // Family People Route 
 Route::prefix('people')->group(function () {
@@ -59,8 +58,13 @@ Route::prefix('userGroup')->group(function () {
     });
 });
 
-// Route with relationship tables 
+// Route with relationship tables one to many
 
-Route::prefix('relationship')->group(function () {
+Route::prefix('oneToMany')->group(function () {
     Route::get('/getPost/{id}', [PostController::class, 'getUserFor']);
+});
+
+// Route with relationship tables many to many
+Route::prefix('manyToMany')->group(function () {
+    Route::get('/getBoth', [UserController::class, 'getUserRole']);
 });

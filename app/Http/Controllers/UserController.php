@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -115,6 +116,12 @@ class UserController extends Controller
         return response()->json(array('message' => 'Deleted data successfully!', 'id' => $id), 200);
     }
 
+    // --------- RELATIONSHIP MANY TO MANY -------------
 
-   
+    public function getUserRole()
+    {
+    //     $user = User::find(2);
+    //     $role = Role::find(2);
+    //    return [$user,$role];
+    }
 }
