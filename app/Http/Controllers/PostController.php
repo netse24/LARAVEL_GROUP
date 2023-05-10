@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class PostController extends Controller
 {
@@ -52,6 +53,26 @@ class PostController extends Controller
 
         return Post::find($request['id']);
     }
+    public function validateData(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|max:2',
+            'description' => 'nullable'
+        ]);
+
+
+        if ($validator->fails()) {
+            return $validator->errors();
+        } else {
+            Post::create([
+                'name' => $request->name,
+                'title' => $request->title,
+                'description' => $request->description,
+            ]);
+            return 'Success';
+        }
+    }
+
     public function getPrice(Request $request)
     {
         //TODO  get price information 
@@ -119,6 +140,6 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         //TODO  
-        
+
     }
 }

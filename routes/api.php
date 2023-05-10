@@ -36,7 +36,10 @@ Route::prefix('postGroup')->group(function () {
     Route::get('/biggest', [PostController::class, 'getBiggestPrice'])->name('getBiggestPrice');
     Route::get('/biggestPost', [PostController::class, 'getBiggestPost'])->name('getBiggestPost');
     Route::get('/notBetween', [PostController::class, 'getPriceNotBetween'])->name('getPriceNotBetween');
+    Route::post('/validation', [PostController::class, 'validateData']);
+
 });
+// Validate function 
 
 // Family People Route 
 Route::prefix('people')->group(function () {
@@ -46,7 +49,6 @@ Route::prefix('people')->group(function () {
 
 
 // Family Users Route
-
 Route::prefix('userGroup')->group(function () {
     Route::get('/get', [UserController::class, 'index']);   // Get all users form users table 
     Route::get('/getId/{id}', [UserController::class, 'show']); // Get one user by id
